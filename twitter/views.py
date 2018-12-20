@@ -1,3 +1,9 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Tweet
+
+
+def twitter(request):
+    if request.user.is_authenticated:
+        tweets = list(Tweet.objects.all())
+    return render(request, 'home.html', {'tweets': tweets})
