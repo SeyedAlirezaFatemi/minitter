@@ -7,3 +7,6 @@ class Tweet(models.Model):
     tweet_title = models.CharField(max_length=50)
     tweet_text = models.CharField(max_length=280)
     pub_date = models.DateTimeField('date published')
+
+    def __str__(self):
+        return f"{self.author}: {self.tweet_title}"
