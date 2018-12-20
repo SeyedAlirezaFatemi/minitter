@@ -4,9 +4,13 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    <p>
-      Hi {{ user.username }}!
-    </p>
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="{{ user.profile.avatar.url }}" alt="Avatar">
+      <div class="card-body">
+        <h5 class="card-title">{{ user.username }}</h5>
+        <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+      </div>
+    </div>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
       New Tweet
     </button>
@@ -36,10 +40,20 @@
         </div>
       </div>
     </div>
-    <img src="{{ user.profile.avatar }}">
-    {% for tweet in tweets %}
-      <li>{{ tweet.tweet_text }}</li>
-    {% endfor %}
+    <ul class="list-group">
+      <li class="list-group-item active">Latest Tweets</li>
+      {% for tweet in tweets %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ tweet.author }}</h5>
+              <small class="text-muted">{{ tweet.tweet_title }}</small>
+            </div>
+            <p class="mb-1">{{ tweet.tweet_text }}</p>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
     <form action="{% url 'upload_avatar' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
       <p>
         <input type="file" name="avatar">
@@ -47,7 +61,15 @@
       <input type="submit" value="Submit"/>
     </form>
   {% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">login</a>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="alert alert-primary" role="alert">
+            You are not logged in.
+          </div>
+          <a href="{% url 'login' %}" class="btn btn-primary">login</a>
+        </div>
+      </div>
+    </div>
   {% endif %}
 {% endblock %}

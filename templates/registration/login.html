@@ -5,27 +5,31 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-4 align-self-center">
-        <h2>Login</h2>
-        <form method="post" class="form-signin">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="id_username">Username</label>
-            <input id="id_username" name="username"
-                   type="text" class="form-control" placeholder="Enter Username">
+        <div class="card">
+          <div class="card-body">
+            <h2>Login</h2>
+            <form method="post" class="form-signin">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="id_username">Username</label>
+                <input id="id_username" name="username"
+                       type="text" class="form-control" placeholder="Enter Username">
+              </div>
+              <div class="form-group">
+                <label for="id_password">Password</label>
+                <input id="id_password" name="password"
+                       type="password" class="form-control" placeholder="Password">
+              </div>
+              {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                  Your username and password didn't match.
+                  Please try again.
+                </div>
+              {% endif %}
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
           </div>
-          <div class="form-group">
-            <label for="id_password">Password</label>
-            <input id="id_password" name="password"
-                   type="password" class="form-control" placeholder="Password">
-          </div>
-          {% if form.errors %}
-            <p class="label label-danger">
-              Your username and password didn't match.
-              Please try again.
-            </p>
-          {% endif %}
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
