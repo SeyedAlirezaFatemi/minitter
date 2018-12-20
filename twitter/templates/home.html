@@ -5,6 +5,35 @@
 {% block content %}
   {% if user.is_authenticated %}
     Hi {{ user.username }}!
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+      Open modal for @mdo
+    </button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New tweet</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <input type="text" id="tweet-title" placeholder="Tweet title" class="form-control">
+                <textarea maxlength="280" style="min-height:100px;height:100%;width:100%;"
+                          placeholder="What's happening?" class="form-control" id="recipient-name"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary">Tweet</button>
+          </div>
+        </div>
+      </div>
+    </div>
     {% for tweet in tweets %}
       <li>{{ tweet.tweet_text }}</li>
     {% endfor %}
