@@ -4,9 +4,11 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hi {{ user.username }}!
+    <p>
+      Hi {{ user.username }}!
+    </p>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
-      Open modal for @mdo
+      New Tweet
     </button>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -34,9 +36,16 @@
         </div>
       </div>
     </div>
+    <img src="{{ user.profile.avatar }}">
     {% for tweet in tweets %}
       <li>{{ tweet.tweet_text }}</li>
     {% endfor %}
+    <form action="{% url 'upload_avatar' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+      <p>
+        <input type="file" name="avatar">
+      </p>
+      <input type="submit" value="Submit"/>
+    </form>
   {% else %}
     <p>You are not logged in</p>
     <a href="{% url 'login' %}">login</a>
