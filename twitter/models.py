@@ -39,3 +39,18 @@ class LoggedInUser(models.Model):
         return self.user.username
 
 
+class Request(models.Model):
+    ip_address = models.GenericIPAddressField()
+    last_request_time = models.TimeField()
+    num_of_requests = models.IntegerField(default=1)
+    black_list = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.ip
+
+
+class UnAuthorizedRequests(models.Model):
+    ip_address = models.GenericIPAddressField()
+    num_of_requests = models.IntegerField(default=1)
+    black_list = models.BooleanField(default=False)
+    user = models.OneToOneField(User, related_name='requested_user', on_delete=models.CASCADE)
