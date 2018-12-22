@@ -58,7 +58,7 @@
     </ul>
     <form action="{% url 'upload_avatar' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
       <p>
-        <input type="file" name="avatar">
+        <input type="file"  name="avatar">
       </p>
       <input type="submit" value="Submit"/>
     </form>
