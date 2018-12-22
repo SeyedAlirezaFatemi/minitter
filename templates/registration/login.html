@@ -26,11 +26,16 @@
                   Please try again.
                 </div>
               {% endif %}
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Login with eMail</button>
             </form>
+              <p style="margin-top: 15px" class="alert-info">OR</p>
+              <a type="button" href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-info">
+                Login with Google
+              </a>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 {% endblock %}
