@@ -49,10 +49,11 @@
                 Change photo:
                 <form class="form-group" action="{% url 'upload_avatar' %}" method="POST"
                       enctype="multipart/form-data">{% csrf_token %}
-                  <p>
-                    <input class="form-control btn-success" type="file" name="avatar">
-                  </p>
-                  <input type="submit" class="form-control btn-primary" value="Upload"/>
+                  <span class="btn btn-warning" style="margin-bottom:5px;position: relative;overflow: hidden;">
+                    Browse photo...
+                    <input type="file" name="avatar"
+                           style="position: absolute;top: 0;right: 0;min-width: 100%;min-height: 100%;font-size: 100px;text-align: right;filter: alpha(opacity=0);opacity: 0;outline: none;background: white;cursor: inherit;display: block;"></span>
+                  <input type="submit" class="form-control btn-success" value="Upload"/>
                 </form>
               </div>
             </div>
@@ -60,19 +61,19 @@
           <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
             <div class="container">
               <ul class="list-group">
-              <li class="list-group-item active">Latest Tweets</li>
-              {% for tweet in tweets %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <div class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">author: {{ tweet.author }}</h5>
-                      <small class="text-muted">title: {{ tweet.tweet_title }}</small>
+                <li class="list-group-item active">Latest Tweets</li>
+                {% for tweet in tweets %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="list-group-item list-group-item-action flex-column align-items-start">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">author: {{ tweet.author }}</h5>
+                        <small class="text-muted">title: {{ tweet.tweet_title }}</small>
+                      </div>
+                      <p class="mb-1 text-left">{{ tweet.tweet_text }}</p>
                     </div>
-                    <p class="mb-1 text-left">{{ tweet.tweet_text }}</p>
-                  </div>
-                </li>
-              {% endfor %}
-            </ul>
+                  </li>
+                {% endfor %}
+              </ul>
             </div>
           </div>
         </div>
