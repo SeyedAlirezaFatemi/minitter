@@ -24,6 +24,9 @@ SECRET_KEY = 'o+bt!8+kd%d&l)26)mmb)$^cq3bbh&bggy0lrqz7q38^a0^3!1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# User logs out automatically upon closing browser
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -47,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'twitter.middlewares.OneSessionPerUser',
 ]
 
 ROOT_URLCONF = 'minitter.urls'
