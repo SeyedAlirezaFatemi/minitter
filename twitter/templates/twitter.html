@@ -51,13 +51,13 @@
               <br>
               Change photo:
               <form class="form-group" action="{% url 'upload_avatar' %}" method="POST"
-                      enctype="multipart/form-data">{% csrf_token %}
-                  <span class="btn btn-warning" style="margin-bottom:5px;position: relative;overflow: hidden;">
+                    enctype="multipart/form-data">{% csrf_token %}
+                <span class="btn btn-warning" style="margin-bottom:5px;position: relative;overflow: hidden;">
                     Browse photo...
                     <input type="file" name="avatar"
                            style="position: absolute;top: 0;right: 0;min-width: 100%;min-height: 100%;font-size: 100px;text-align: right;filter: alpha(opacity=0);opacity: 0;outline: none;background: white;cursor: inherit;display: block;"></span>
-                  <input type="submit" class="form-control btn-success" value="Upload"/>
-                </form>
+                <input type="submit" class="form-control btn-success" value="Upload"/>
+              </form>
             </div>
           </div>
         </div>
