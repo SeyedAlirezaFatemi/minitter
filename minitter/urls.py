@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('twitter/', include('twitter.urls'), name='twitter'),
     path('api/', include('api.urls'), name='api'),
+    path('api-auth/', include('rest_framework.urls')),
 ]
