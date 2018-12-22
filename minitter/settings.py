@@ -24,6 +24,9 @@ SECRET_KEY = 'o+bt!8+kd%d&l)26)mmb)$^cq3bbh&bggy0lrqz7q38^a0^3!1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# User logs out automatically upon closing browser
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -36,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'twitter.apps.TwitterConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -46,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'twitter.middlewares.OneSessionPerUser',
 ]
 
 ROOT_URLCONF = 'minitter.urls'
@@ -124,3 +129,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = 'twitter'
 LOGOUT_REDIRECT_URL = 'twitter'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
