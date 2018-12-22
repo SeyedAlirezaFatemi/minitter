@@ -33,7 +33,7 @@ class OneSessionPerUser:
 
 
 class ManyRequests:
-    def __init__(self, get_response, h, n, m):
+    def __init__(self, get_response, h, n):
         self.h = h
         self.n = n
         self.get_response = get_response
