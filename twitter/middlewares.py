@@ -1,8 +1,10 @@
+from datetime import timedelta
+
 from django.contrib.sessions.models import Session
 from django.http import HttpResponse
 
-from .models import LoggedInUser, Request, UnAuthorizedRequests
-from datetime import datetime, timedelta
+from twitter.information_gathering import get_client_ip, get_request_time
+from .models import Request, UnAuthorizedRequests
 
 
 class OneSessionPerUser:
@@ -74,24 +76,7 @@ class HandleUnAuthorizedRequests:
         if req.num_of_requests >= self.n:
             req.black_list = True
         if req and req.black_list:
-            return HttpResponse("oops! too many unauthorized responses!")
+            return HttpResponse("oops! Too many unauthorized responses!")
         req.save()
         response = self.get_response(request)
         return response
-
-
-def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
-
-
-def get_client_browser(request):
-    return request.META['HTTP_USER_AGENT']
-
-
-def get_request_time(request):
-    return request.session['last_touch']
