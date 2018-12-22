@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+      <div class="card">
+        <h5 class="card-title">Sign Up</h5>
+        <div class="card-body">
+          <form method="post">
+
+            {% csrf_token %}
+
+            {% for field in form %}
+
+              <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+
+                  <small style="color: grey">{{ field.help_text }}</small>
+
+                {% endif %}
+
+                {% for error in field.errors %}
+
+                  <p style="color: red">{{ error }}</p>
+
+                {% endfor %}
+
+              </p>
+
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary">Sign up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

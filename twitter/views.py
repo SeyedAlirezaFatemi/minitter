@@ -1,10 +1,18 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.utils import timezone
+from django.views import generic
 
-from .forms import ImageUploadForm
+from .forms import ImageUploadForm, SignUpForm
 from .models import Tweet
+
+
+class SignUp(generic.CreateView):
+    form_class = SignUpForm
+    success_url = reverse_lazy('login')
+    template_name = 'signup.html'
 
 
 def twitter(request):
