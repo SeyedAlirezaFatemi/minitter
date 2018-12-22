@@ -1,10 +1,11 @@
-from django.conf.urls import url, include
+from django.conf.urls import include, url
 from rest_framework import routers
+
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
+router.register('users', views.UserViewSet)
+router.register('groups', views.GroupViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = [
