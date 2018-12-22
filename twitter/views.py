@@ -1,3 +1,5 @@
+from Lib import os
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
@@ -35,3 +37,11 @@ def new_tweet(request):
     tweet = Tweet(author=current_user, tweet_title=tweet_title, tweet_text=tweet_text, pub_date=timezone.now())
     tweet.save()
     return HttpResponse('Success')
+
+
+def login(request):
+    return  render(request, 'registration/login.html')
+
+
+def logout(request):
+    return render(request,'registration/logged_out.html')
