@@ -1,5 +1,3 @@
-from Lib import os
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
@@ -48,8 +46,8 @@ def new_tweet(request):
 
 
 def login(request):
-    return  render(request, 'registration/login.html')
+    return render(request, 'registration/login.html')
 
 
 def logout(request):
-    return render(request,'registration/logged_out.html')
+    return render(request, 'registration/logged_out.html')
