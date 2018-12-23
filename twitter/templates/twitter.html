@@ -22,7 +22,8 @@
             <form method="post" action="{% url 'new_tweet' %}">
               {% csrf_token %}
               <div class="form-group">
-                <input name="tweet_title" type="text" id="tweet-title" placeholder="Tweet title" class="form-control">
+                <input name="tweet_title" type="text" autocomplete="off" id="tweet-title" placeholder="Tweet title"
+                       class="form-control">
                 <textarea name="tweet_text" maxlength="280" style="min-height:100px;height:100%;width:100%;"
                           placeholder="What's happening?" class="form-control" id="recipient-name"></textarea>
               </div>
@@ -42,7 +43,12 @@
           <div class="card">
             <img class="card-img-top" src="{{ user.profile.avatar.url }}" alt="{{ user.username }}'s Avatar">
             <div class="card-body">
-              <h5 class="card-title">Hi {{ user.username }}</h5>
+              <h5 class="card-title">
+                Hi
+                <span class="font-weight-bold text-info">
+                  {{ user.username }}
+                </span>
+              </h5>
               <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newTweetModal">
                 New Tweet

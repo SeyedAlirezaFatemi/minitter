@@ -1,24 +1,43 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from social_core.backends.facebook import FacebookOAuth2
+from social_core.backends import google
+from urllib3 import PoolManager, exceptions
+from django.template.defaultfilters import slugify
+from django.core.files.base import ContentFile
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(
-        upload_to="avatars/", default='avatar.png')
+    avatar = models.ImageField(upload_to="avatars/", default='avatar.png')
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+def new_users_handler(sender, user, response, details, **kwargs):
+    user.is_new = True
+    if user.is_new:
+        if "id" in response:
 
+            try:
+                url = None
+                if sender == FacebookOAuth2:
+                    url = "http://graph.facebook.com/%s/picture?type=large" \
+                          % response["id"]
+                elif sender == google.GoogleOAuth2 and "picture" in response:
+                    url = response["picture"]
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+                if url:
+                    avatar = PoolManager().request('GET', url)
+                    profile = Profile(user=user)
+
+                    profile.avatar.save(slugify(user.username + " social") + '.jpg',
+                                        ContentFile(avatar.read()))
+
+                    profile.save()
+
+            except exceptions.HTTPError:
+                pass
+
+    return False
 
 
 class Tweet(models.Model):

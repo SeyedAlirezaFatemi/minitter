@@ -48,8 +48,8 @@ def new_tweet(request):
 
 
 def login(request):
-    return  render(request, 'registration/login.html')
+    return render(request, 'registration/login.html')
 
 
 def logout(request):
-    return render(request,'registration/logged_out.html')
+    return render(request, 'registration/logged_out.html')
