@@ -59,6 +59,12 @@
                 <input type="submit" class="form-control btn-success" value="Upload"/>
               </form>
             </div>
+            <div class="input-group">
+              <div class="btn input-group-prepend" id="genToken">
+                <span class="input-group-text">Token</span>
+              </div>
+              <textarea class="form-control" aria-label="Token" id="tokenArea"></textarea>
+            </div>
           </div>
         </div>
         <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
@@ -83,6 +89,24 @@
         </div>
       </div>
     </div>
+
+    <script>
+        $("#genToken").click(function () {
+            fetch("{% url 'api:update_token' %}", {
+                method: 'GET',
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token   }}",
+                },
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    $("#tokenArea").val(data.token);
+                });
+        })
+
+    </script>
 
   {% else %}
 
