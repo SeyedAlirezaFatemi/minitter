@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views import generic
 
@@ -31,7 +31,7 @@ def upload_avatar(request):
         if form.is_valid():
             current_user.profile.avatar = form.cleaned_data['avatar']
             current_user.save()
-            return HttpResponse('Success')
+            return HttpResponseRedirect(reverse('twitter'))
     return HttpResponseForbidden('Allowed only via POST.')
 
 
@@ -42,7 +42,7 @@ def new_tweet(request):
     tweet_text = request.POST.get('tweet_text')
     tweet = Tweet(author=current_user, tweet_title=tweet_title, tweet_text=tweet_text, pub_date=timezone.now())
     tweet.save()
-    return HttpResponse('Success')
+    return HttpResponseRedirect(reverse('twitter'))
 
 
 def login(request):
