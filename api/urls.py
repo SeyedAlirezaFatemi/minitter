@@ -1,13 +1,8 @@
-from django.conf.urls import include, url
-from rest_framework import routers
+from django.conf.urls import url
 
-from . import views
-
-router = routers.DefaultRouter()
-router.register('users', views.UserViewSet)
-router.register('groups', views.GroupViewSet)
+from rest_framework.authtoken import views
 
 # Wire up our API using automatic URL routing.
 urlpatterns = [
-    url('', include(router.urls)),
+    url('api-token-auth/', views.obtain_auth_token),
 ]

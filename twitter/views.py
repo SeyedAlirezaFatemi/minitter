@@ -43,11 +43,3 @@ def new_tweet(request):
     tweet = Tweet(author=current_user, tweet_title=tweet_title, tweet_text=tweet_text, pub_date=timezone.now())
     tweet.save()
     return HttpResponseRedirect(reverse('twitter'))
-
-
-def login(request):
-    return render(request, 'registration/login.html')
-
-
-def logout(request):
-    return render(request, 'registration/logged_out.html')
