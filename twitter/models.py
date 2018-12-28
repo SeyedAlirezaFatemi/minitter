@@ -54,3 +54,8 @@ class UnAuthorizedRequests(models.Model):
     num_of_requests = models.IntegerField(default=1)
     black_list = models.BooleanField(default=False)
     user = models.OneToOneField(User, related_name='requested_user', on_delete=models.CASCADE)
+
+
+class FailedLogInAttempt(models.Model):
+    ip_address = models.GenericIPAddressField()
+    num_of_requests = models.IntegerField(default=1)

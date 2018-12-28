@@ -27,6 +27,11 @@ DEBUG = True
 # User logs out automatically upon closing browser
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+# Recaptcha key for google
+RECAPTCHA_PRIVATE_KEY = '6LdVTIUUAAAAACfQ1ESBjx-1cIOmAn7_aoQ5puGu'
+RECAPTCHA_PUBLIC_KEY = '6LdVTIUUAAAAAAMI7Sa60agS47t67oWq0GCUbuKD'
+
+
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -43,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'social_django',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +166,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
+
+EMAIL_USE_TLS = True
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'minitterr@gmail.com'
+EMAIL_HOST_PASSWORD = 'minitter123'
+EMAIL_PORT = 587
