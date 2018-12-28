@@ -48,8 +48,9 @@ def login_validation(request):
         else:
             user = authenticate(request, username=username, password=password)
             if user is None:
+                user = User.objects.filter(username=username)
                 add_failed_attempt(information_gathering.get_client_ip(request))
-                email = EmailMessage('WARNING', 'there has been a security problem!', to=[request.user.email])
+                email = EmailMessage('WARNING', 'there has been a security problem!', to=[user.email])
                 email.send()
                 return render(request, 'login.html', {'errors': 'invalid password', 'show_captcha': show_captcha})
             else:

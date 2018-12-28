@@ -1,11 +1,58 @@
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from api.models import FailedTokenAttempt
+from twitter import information_gathering
 from twitter.models import Tweet
+
+
+class CustomAuthToken(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        if has_reached_max_attempt(information_gathering.get_client_ip(request)):
+            return Response({
+                'error': 'Request Blocked',
+            })
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        if serializer.is_valid():
+            user = serializer.validated_data['user']
+            token, created = Token.objects.get_or_create(user=user)
+            print(user.email)
+            return Response({
+                'token': token.key,
+                'user_id': user.pk,
+                'email': user.email,
+            })
+        else:
+            add_failed_attempt(information_gathering.get_client_ip(request))
+            serializer.is_valid(raise_exception=True)
+
+
+def add_failed_attempt(ip):
+    attempt = FailedTokenAttempt.objects.filter(ip_address=ip)
+    if attempt:
+        attempt = FailedTokenAttempt.objects.get(ip_address=ip)
+        attempt.num_of_requests += 1
+        print(attempt.num_of_requests)
+        attempt.save()
+    else:
+        failed = FailedTokenAttempt(ip_address=ip)
+        failed.save()
+
+
+def has_reached_max_attempt(ip):
+    attempt = FailedTokenAttempt.objects.filter(ip_address=ip)
+    if attempt:
+        attempt = FailedTokenAttempt.objects.get(ip_address=ip)
+        if attempt.num_of_requests >= 5:
+            return True
+    return False
 
 
 @api_view(['GET'])

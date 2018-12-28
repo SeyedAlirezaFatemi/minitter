@@ -1,12 +1,11 @@
 from django.conf.urls import url
-from rest_framework.authtoken import views
 
-from .views import new_tweet, update_auth_token
+from . import views
 
 urlpatterns = [
-    url('api-token-auth/', views.obtain_auth_token),
-    url('api-update-token/', update_auth_token, name='update_token'),
-    url('new-tweet/', new_tweet, name='new_tweet'),
+    url('api-token-auth/', views.CustomAuthToken.as_view()),
+    url('api-update-token/', views.update_auth_token, name='update_token'),
+    url('new-tweet/', views.new_tweet, name='new_tweet'),
 ]
 
 app_name = 'api'

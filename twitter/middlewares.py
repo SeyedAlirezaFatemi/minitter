@@ -33,9 +33,9 @@ class OneSessionPerUser:
 
 
 class ManyRequests:
-    def __init__(self, get_response, h, n):
-        self.h = h
-        self.n = n
+    def __init__(self, get_response):
+        self.h = 1000
+        self.n = 15
         self.get_response = get_response
 
     def __call__(self, request):
@@ -62,8 +62,8 @@ class ManyRequests:
 
 
 class HandleUnAuthorizedRequests:
-    def __init__(self, get_response, n):
-        self.n = n
+    def __init__(self, get_response):
+        self.n = 15
         self.get_response = get_response
 
     def __call__(self, request):
