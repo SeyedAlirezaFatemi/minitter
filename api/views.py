@@ -71,6 +71,8 @@ def new_tweet(request):
     current_user = request.user
     tweet_title = request.data.get('tweet_title')
     tweet_text = request.data.get('tweet_text')
+    if tweet_text == '' or tweet_text == '':
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     tweet = Tweet(author=current_user, tweet_title=tweet_title, tweet_text=tweet_text, pub_date=timezone.now())
     tweet.save()
     return Response(status=status.HTTP_201_CREATED)

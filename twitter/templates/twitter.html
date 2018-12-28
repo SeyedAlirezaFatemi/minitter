@@ -22,8 +22,8 @@
             <form method="post" action="{% url 'new_tweet' %}">
               {% csrf_token %}
               <div class="form-group">
-                <input name="tweet_title" type="text" id="tweet-title" placeholder="Tweet title" class="form-control">
-                <textarea name="tweet_text" maxlength="280" style="min-height:100px;height:100%;width:100%;"
+                <input name="tweet_title" required type="text" id="tweet-title" placeholder="Tweet title" class="form-control">
+                <textarea name="tweet_text" required maxlength="280" style="min-height:100px;height:100%;width:100%;"
                           placeholder="What's happening?" class="form-control" id="recipient-name"></textarea>
               </div>
               <div class="modal-footer">
