@@ -51,10 +51,10 @@ class ManyRequests:
             req.last_request_time = touch_time
         if not req:
             req = Request(ip_address=ip_address, last_request_time=touch_time)
-        if req.num_of_requests >= self.n:
+        if req and req.num_of_requests >= self.n:
             req.black_list = True
         if req and req.black_list:
-            return HttpResponse("oops! too many responses!")
+            return HttpResponse("Hell NO! Too many requests!")
         req.save()
 
         response = self.get_response(request)
@@ -73,10 +73,10 @@ class HandleUnAuthorizedRequests:
             req.num_of_requests += 1
         if not req and not request.user.is_authenticated:
             req = Request(ip_address=ip_address, user=request.user)
-        if req.num_of_requests >= self.n:
+        if req and req.num_of_requests >= self.n:
             req.black_list = True
         if req and req.black_list:
-            return HttpResponse("oops! Too many unauthorized responses!")
+            return HttpResponse("Hell NO! Too many unauthorized requests!")
         req.save()
         response = self.get_response(request)
         return response

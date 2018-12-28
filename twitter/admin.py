@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
-from .models import LoggedInUser, Profile, Tweet, UnAuthorizedRequests, Request, FailedLogInAttempt
+from .models import FailedLogInAttempt, LoggedInUser, Profile, Request, Tweet, UnAuthorizedRequests
 
 admin.site.register(Tweet)
 admin.site.register(Profile)

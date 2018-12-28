@@ -1,12 +1,11 @@
 import json
 import urllib
 
-from django.contrib.auth import user_logged_in, login, authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView
-from django.core.mail import send_mail, EmailMessage
-from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponse
+from django.core.mail import EmailMessage
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -14,9 +13,8 @@ from django.views import generic
 
 from minitter import settings
 from twitter import information_gathering
-
 from .forms import ImageUploadForm, SignUpForm
-from .models import Tweet, FailedLogInAttempt
+from .models import FailedLogInAttempt, Tweet
 
 
 class SignUp(generic.CreateView):
